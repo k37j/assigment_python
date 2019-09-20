@@ -6,8 +6,7 @@ class TestSetup(object):
     def open_test_session(self, sessionType='chrome', capabilities=None, options=None):
         "sessionType for Chrome/Mozilla/IE/etc"
         if sessionType.lower() == 'chrome':
-            # should be in PATH, but does not recognize for me after moving solution
-            self.driver = webdriver.Chrome(executable_path='G://GIT//Drivers//chromedriver_2.33', options=options, desired_capabilities=capabilities)
+            self.driver = webdriver.Chrome(options=options, desired_capabilities=capabilities)
         else:
             raise ValueError('Not supported session type')
 

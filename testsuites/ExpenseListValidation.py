@@ -13,7 +13,6 @@ class ExpenseListValidationScenario(object):
         assert expenseList.list_row_is_present(testData)
         
 
-
 class ExpenseListValidation(unittest.TestCase):
 
     def setUp(self):
