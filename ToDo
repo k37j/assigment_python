@@ -1,0 +1,6 @@
+
+- See the list of each expense with its title, the name of the payer and the amount paid
+- Filter on the list by user
+- Add a new expense to the list by filling what it is, who paid it and how much it cost
+- See the total expenses of the displayed list
+- Add a new payer
