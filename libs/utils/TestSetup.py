@@ -10,6 +10,10 @@ class TestSetup(object):
         else:
             raise ValueError('Not supported session type')
 
+    def _clear_local_storage(self):
+        # no need for now
+        self.driver.execute('window.localStorage.clear()')
+
     def get_driver(self):
         if not self.driver:
             raise Exception('Open test session first')
