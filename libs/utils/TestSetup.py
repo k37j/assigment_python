@@ -14,7 +14,7 @@ class TestSetup(object):
         # no need for now
         try:
             self.driver.execute('window.localStorage.clear()')
-        except WebDriverException as wde:
+        except Exception as wde:
             print('! Problem with setting up test environment !')
             raise Exception(wde)
 
