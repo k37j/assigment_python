@@ -32,10 +32,17 @@ class FilteringExpenseListTest(unittest.TestCase):
 
     def test_filtering_is_correct(self):
         data_set = [
-            ['Amine',[['Escape Game', 'Amine', '85.00 $'],['Beer', 'Amine', '15.00 $']]], 
-            ['Kévin',[['Costumes', 'Kévin', '135.00 $'],['Dinner', 'Kévin', '115.00 $']]],
+            ['Amine',[['Escape Game', 'Amine', '85.00 $'],
+                     ['Beer', 'Amine', '15.00 $']]], 
+            ['Kévin',[['Costumes', 'Kévin', '135.00 $'],
+                     ['Dinner', 'Kévin', '115.00 $']]],
             ['Julie',[['Movies', 'Julie', '35.00 $']]],
-        ]
+            ['Tous',[['Movies', 'Julie', '35.00 $'],
+                    ['Costumes', 'Kévin', '135.00 $'],
+                    ['Dinner', 'Kévin', '115.00 $'],
+                    ['Escape Game', 'Amine', '85.00 $'],
+                    ['Beer', 'Amine', '15.00 $']]]
+        ]        
         for d in data_set:
             self.scenario.run(d)
 

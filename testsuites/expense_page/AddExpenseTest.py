@@ -18,7 +18,8 @@ class AddExpenseScenario(object):
 
     def validate_incorrect_expense(self, testData):
         expenseList = ExpenseListPage(self.driver)
-        assert expenseList.get_number_of_visible_rows() == testData, 'New expense was added' 
+        assert not expenseList.list_row_is_present(testData[0]),  'Invalid expense was added to list: ' + str(testData[0])
+        assert expenseList.get_number_of_visible_rows() == testData[1], 'New expense was added' 
         
 
 class AddExpenseTest(unittest.TestCase):
@@ -29,54 +30,57 @@ class AddExpenseTest(unittest.TestCase):
         self.scenario = AddExpenseScenario(self.testSession.get_driver())
 
     def test_add_valid_expense(self):
-        data_set = [
+        expense_data = [
                 ['Diving', 'Amine', '12.00 $'],
                 ['House', 'Julie', '355555.00 $'],
                 ['Boat', 'Kévin', '85.00 $']
             ]
-        for d in data_set:
-            self.scenario.run(d)
-            self.scenario.validate_correct_expense(d)
+        for ed in expense_data:
+            self.scenario.run(ed)
+            self.scenario.validate_correct_expense(ed)
 
     def test_add_expense_no_title(self):
-        data_set = ['', 'Kévin', '3.00 $']
+        expense_data = ['', 'Kévin', '3.00 $']
         expected_row_count = 5
-        self.scenario.run(data_set)
-        self.scenario.validate_incorrect_expense(expected_row_count)
+        self.scenario.run(expense_data)
+        self.scenario.validate_incorrect_expense([expense_data, expected_row_count])
 
     def test_add_expense_no_payer(self):
-        data_set = ['Wine', '', '7.00 $']
+        expense_data = ['Wine', '', '7.00 $']
         expected_row_count = 5
-        self.scenario.run(data_set)
-        self.scenario.validate_incorrect_expense(expected_row_count)
+        self.scenario.run(expense_data)
+        self.scenario.validate_incorrect_expense([expense_data, expected_row_count])
 
     def test_add_expense_empty_amount(self):
         # if amount is empty it'll crash page badly after refresh
-        data_set = ['Nuts', 'Kévin', ''] 
+        expense_data = ['Nuts', 'Kévin', ''] 
         expected_row_count = 5
-        self.scenario.run(data_set)
-        self.scenario.validate_incorrect_expense(expected_row_count)
+        self.scenario.run(expense_data)
+        self.scenario.validate_incorrect_expense([expense_data, expected_row_count])
 
     def test_add_expense_string_amount(self):
         # if amount is empty it'll crash page badly after refresh
-        data_set = ['Boots', 'Kévin', 'Twenty Five'] 
+        expense_data = ['Boots', 'Kévin', 'Twenty Five'] 
         expected_row_count = 5
-        self.scenario.run(data_set)
-        self.scenario.validate_incorrect_expense(expected_row_count)
+        self.scenario.run(expense_data)
+        self.scenario.validate_incorrect_expense([expense_data, expected_row_count])
     
     def test_add_expense_deciaml_amount(self):
         # i'd say it's a bug, to define with developer and PO
-        data_set = ['Birds', 'Kévin', '0,75 $'] 
+        expense_data = ['Birds', 'Kévin', '0,75 $'] 
         expected_row_count = 5
-        self.scenario.run(data_set)
-        self.scenario.validate_incorrect_expense(expected_row_count)
+        self.scenario.run(expense_data)
+        self.scenario.validate_incorrect_expense([expense_data, expected_row_count])
 
     def test_add_expense_euro_amount(self):
         # i'd say it's a bug, to define with developer and PO
-        data_set = ['Tower', 'Kévin', '75 Eur'] 
+        expense_data = ['Tower', 'Kévin', '75 Eur'] 
         expected_row_count = 5
-        self.scenario.run(data_set)
-        self.scenario.validate_incorrect_expense(expected_row_count)
+        self.scenario.run(expense_data)
+        self.scenario.validate_incorrect_expense([expense_data, expected_row_count])
 
     def tearDown(self):
         self.testSession.close_test_session()
+
+if __name__ == "__main__":
+    unittest.main()
